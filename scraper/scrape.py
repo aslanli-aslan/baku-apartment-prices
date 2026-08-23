@@ -439,7 +439,7 @@ def main() -> None:
             f"Stage 2: enriching {len(all_listings)} listings with {ENRICH_WORKERS} workers."
         )
         stage2_start = time.perf_counter()
-        written = _enrich_and_stream_to_csv(all_listings, RAW_DATA)
+        written = _enrich_and_stream_to_csv(all_listings, RAW_DATA / "data.csv")
         stage2_elapsed = time.perf_counter() - stage2_start
         log.info(
             f"Stage 2 complete: {written} rows written in {stage2_elapsed}s ({written / stage2_elapsed}/s)"
