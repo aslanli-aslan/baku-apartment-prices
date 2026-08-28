@@ -2,7 +2,6 @@ import csv
 import json
 import logging
 import random
-import re
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -84,7 +83,7 @@ def _fetch(
         except (requests.RequestException, ValueError) as exc:
             wait = (2**attempt) + random.uniform(0, 1)
             log.warning(
-                f"Attempt {attempt+1}/{retries} failed for {url}: {exc} - retrying in {wait}s"
+                f"Attempt {attempt + 1}/{retries} failed for {url}: {exc} - retrying in {wait}s"
             )
             time.sleep(wait)
     log.error(f"All {retries} attempts failed for {url}")
@@ -144,6 +143,22 @@ def _search_items(
                 "persistedQuery": {
                     "version": 1,
                     "sha256Hash": "b781511a943a4d710eefdf811a24dd4ae353e55d836952603ce0b37fde97d073",
+                }
+            }
+        ),
+    }
+    return _fetch(GRAPHQL_URL, params)
+
+
+def _fetch_additional_information(id: int) -> dict | None:
+    params = {
+        "operationName": "UserRelatedItem",
+        "variables": json.dumps({"id": id}),
+        "extensions": json.dumps(
+            {
+                "persistedQuery": {
+                    "version": 1,
+                    "sha256Hash": "2b71465916b23b497ba378e6a300c8bb95ed42dfa85f3a6adc6247e3da774444",
                 }
             }
         ),
@@ -280,32 +295,15 @@ def _scrape_range(price_from: int, price_to: int) -> list[dict]:
 def _get_additional_information(listing: dict) -> dict:
 
     result = dict(listing)
-    result["lat"] = None
-    result["lng"] = None
 
-    url = f"https://bina.az/items/{listing['id']}"
-    content = _fetch(url, is_json=False)
+    id = listing["id"]
+    response = _fetch_additional_information(id)
 
-    if content is None:
-        log.warning(f"Could not fetch detail page for listing {listing['id']}")
-        return result
+    data = response.get("data")
+    item = data.get("item")
 
-    try:
-        map_match = re.search(r'id="item_map"[^>]+', content)
-        if not map_match:
-            log.debug(f"No map element for listing {listing['id']}")
-            return result
-
-        tag_content = map_match.group(0)
-        lat_match = re.search(r'data-lat="([^"]+)"', tag_content)
-        lng_match = re.search(r'data-lng="([^"]+)"', tag_content)
-
-        if lat_match:
-            result["lat"] = lat_match.group(1)
-        if lng_match:
-            result["lng"] = lng_match.group(1)
-    except Exception as exc:
-        log.warning(f"Regex error for listing {listing['id']}: {exc}")
+    result["lat"] = item.get("latitude", None)
+    result["lng"] = item.get("longitude", None)
 
     return result
 
@@ -397,7 +395,6 @@ def main() -> None:
     overall_start = time.perf_counter()
 
     with SB(uc=True, headless=True) as sb:
-
         # navigate to page and bypass cloudflare challenge
         sb.driver.set_script_timeout(30)
         sb.uc_open_with_reconnect("https://bina.az/baki/alqi-satqi/menziller", 5)
