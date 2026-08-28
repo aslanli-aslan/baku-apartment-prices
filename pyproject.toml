@@ -12,6 +12,9 @@ dependencies = [
     "beautifulsoup4>=4.15.0",
     "seleniumbase>=4.51.12",
     "ruff>=0.16.2",
+    "ipykernel>=7.3.0",
+    "pandas>=3.0.5",
+    "seaborn>=0.13.2",
 ]
 
 [tool.setuptools.packages.find]
