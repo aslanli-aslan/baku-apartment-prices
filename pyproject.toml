@@ -15,6 +15,7 @@ dependencies = [
     "ipykernel>=7.3.0",
     "pandas>=3.0.5",
     "seaborn>=0.13.2",
+    "statsmodels>=0.15.0",
 ]
 
 [tool.setuptools.packages.find]
