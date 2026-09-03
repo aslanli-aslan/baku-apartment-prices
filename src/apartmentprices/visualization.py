@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import numpy as np
+import contextily as cx
 
 
 def distribution(x: pd.Series):
@@ -30,5 +32,39 @@ def distribution(x: pd.Series):
 
     sns.despine(top=True, right=True)
     ax.grid(axis="y", linestyle="--", alpha=0.5)
+
+    plt.tight_layout()
+
+
+def mapplot(df):
+
+    # for coloring
+    log_price = np.log(df["price"])
+
+    sns.set_theme(style="white", palette="pastel")
+
+    fig, ax = plt.subplots(figsize=(9, 5), dpi=150)
+
+    sns.scatterplot(
+        data=df,
+        x="lng",
+        y="lat",
+        hue=log_price,
+        size=df.groupby(["lng", "lat"])["lng"].transform("count"),
+        sizes=(20,200),
+        alpha=0.6,
+        legend=False,
+        ax=ax,
+    )
+
+
+    cx.add_basemap(
+            ax,
+            crs="EPSG:4326",
+            source=cx.providers.OpenStreetMap.Mapnik,
+            headers={"User-Agent": "BakuApartmentPrices/1.0 (aslanliaslan450@gmail.com)"},
+        )
+
+    ax.axis("off")
 
     plt.tight_layout()
