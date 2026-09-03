@@ -19,3 +19,11 @@ def check_near_duplicates(df: pd.DataFrame, diff_cols: list) -> pd.DataFrame:
     diff_duplicates = duplicates & ~base_duplicates
 
     return df[diff_duplicates].sort_values(list(matching_cols))
+
+
+def check_location_of_coordinates(df, lat, lng):
+    df = df.copy()
+
+    filtered = df[(df["lat"] == lat) & (df["lng"] == lng)]
+
+    return filtered["location"].value_counts()
