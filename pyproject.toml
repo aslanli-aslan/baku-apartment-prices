@@ -16,6 +16,8 @@ dependencies = [
     "pandas>=3.0.5",
     "seaborn>=0.13.2",
     "statsmodels>=0.15.0",
+    "itables>=2.9.1",
+    "contextily>=1.7.1",
 ]
 
 [tool.setuptools.packages.find]
