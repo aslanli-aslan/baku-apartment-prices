@@ -75,6 +75,14 @@ def calculate_floor_fields(df):
     return df
 
 
+def calculate_physical_features(df):
+    df = df.copy()
+
+    df["area_to_room_ratio"] = df["area"] / df["rooms"]
+
+    return df
+
+
 def calculate_metro_features(df):
     METRO_COORDINATES = np.array(
         [
@@ -157,13 +165,14 @@ def calculate_distance_to_center(df):
 
 def drop_useless_columns(df):
 
-    df = df.drop(columns=["id", "updatedAt"])
+    df = df.drop(columns=["id", "updatedAt", "hasMortgage"])
 
     return df
 
 
 def engineering_pipeline(df):
     df = calculate_floor_fields(df)
+    df = calculate_physical_features(df)
     df = calculate_metro_features(df)
     df = calculate_distance_to_center(df)
     df = drop_useless_columns(df)
