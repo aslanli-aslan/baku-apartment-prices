@@ -2,6 +2,7 @@ from typing import Literal
 
 import contextily as cx
 import matplotlib.pyplot as plt
+import shap
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -202,5 +203,18 @@ def mapplot(df):
     )
 
     ax.axis("off")
+
+    plt.tight_layout()
+
+
+def feature_importance_plot(model, x_val):
+
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer(x_val)
+
+    plt.figure(figsize=(10, 6), dpi=150)
+    shap.summary_plot(shap_values, x_val, show=False)
+
+    plt.title("SHAP Feature Importance", pad=15)
 
     plt.tight_layout()
