@@ -23,6 +23,7 @@ dependencies = [
     "pyarrow>=25.0.1",
     "catboost>=1.2.10",
     "optuna>=5.0.0",
+    "shap>=0.52.0",
 ]
 
 [tool.setuptools.packages.find]
