@@ -6,3 +6,11 @@ timestamp,model,data,n_features,mae,mape,rmsle,r2,notes
 2026-09-07 18:53,CatBoostRegressor,Engineered Data,16,32065.0,9.77,0.1349,0.8926,CatBoost on 16 features
 2026-09-07 18:58,CatBoostRegressor,Engineered Data,16,32065.0,9.77,0.1349,0.8926,CatBoost on 16 features
 2026-09-07 19:01,LightGBM (Optuna Tuned),Engineered Data,16,26534.0,8.18,0.1211,0.9194,Optuna tuned 60 trials minimizing MAPE
+2026-09-08 01:17,LightGBM (Optuna Tuned),Engineered Data,16,26499.0,8.12,0.121,0.9156,Optuna tuned 60 trials minimizing MAPE
+2026-09-08 01:57,LGBMRegressor,Engineered Data,16,29710.0,9.09,0.1294,0.9018,Added area to room ratio and dropped hasMortgage
+2026-09-08 01:57,CatBoostRegressor,Engineered Data,16,32220.0,9.8,0.1358,0.8877,CatBoost (Added area to room ratio and dropped hasMortgage)
+2026-09-08 02:00,LightGBM (Optuna Tuned),Engineered Data,16,26447.0,8.09,0.1207,0.9126,Optuna tuned 60 trials minimizing MAPE (Added area to room ratio and dropped hasMortgage)
+2026-09-08 02:12,LGBMRegressor,Engineered Data,16,29710.0,9.09,0.1294,0.9018,Added area to room ratio and dropped hasMortgage
+2026-09-08 02:12,CatBoostRegressor,Engineered Data,16,32220.0,9.8,0.1358,0.8877,CatBoost (Added area to room ratio and dropped hasMortgage)
+2026-09-08 02:15,LightGBM (Optuna Tuned),Engineered Data,16,26091.0,7.98,0.1199,0.9148,Optuna tuned 60 trials minimizing MAPE (Added area to room ratio and dropped hasMortgage)
+2026-09-08 02:26,LightGBM (Final Holdout Test),Engineered Test,16,26754.0,8.01,0.1226,0.8821,FINAL HOLDOUT TEST EVALUATION (Untouched 20% test split)
