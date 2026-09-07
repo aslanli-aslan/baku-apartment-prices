@@ -12,3 +12,5 @@ wheels/
 .ruff_cache
 downloaded_files/
 data/
+
+notebooks/catboost_info/
