@@ -5,7 +5,7 @@ from itables import init_notebook_mode
 
 
 def setup():
-    pd.set_option("display.float_format", "{:.4f}".format)
+    pd.set_option("display.float_format", "{:.7f}".format)
 
     init_notebook_mode(all_interactive=True)
     itables_options.style = "table-layout:auto;width:auto;margin:0;caption-side:bottom"

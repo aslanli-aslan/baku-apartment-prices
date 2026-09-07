@@ -1,0 +1,8 @@
+timestamp,model,data,n_features,mae,mape,rmsle,r2,notes
+2026-09-07 18:40,LGBMRegressor,Complete raw,10,38409.0,12.2,0.1621,0.8611,Baseline performance on complete raw data
+2026-09-07 18:40,LGBMRegressor,Engineered Data,12,35817.0,10.81,0.1487,0.8616,First iteration complete dataset
+2026-09-07 18:45,LGBMRegressor,Engineered Data,16,34983.0,10.61,0.1461,0.8685,2. iteration complete dataset
+2026-09-07 18:48,LGBMRegressor,Engineered Data,16,29634.0,9.09,0.1292,0.9047,2. iteration complete dataset with more powerful model
+2026-09-07 18:53,CatBoostRegressor,Engineered Data,16,32065.0,9.77,0.1349,0.8926,CatBoost on 16 features
+2026-09-07 18:58,CatBoostRegressor,Engineered Data,16,32065.0,9.77,0.1349,0.8926,CatBoost on 16 features
+2026-09-07 19:01,LightGBM (Optuna Tuned),Engineered Data,16,26534.0,8.18,0.1211,0.9194,Optuna tuned 60 trials minimizing MAPE

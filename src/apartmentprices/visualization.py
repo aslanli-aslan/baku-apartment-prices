@@ -1,9 +1,10 @@
+from typing import Literal
+
 import contextily as cx
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from typing import Literal
 
 
 def distribution(x: pd.Series):
@@ -123,7 +124,11 @@ def boxplot(
         medianprops={"color": "#1A365D", "linewidth": 2.5},
         whiskerprops={"color": "#1A365D"},
         capprops={"color": "#1A365D"},
-        flierprops={"markerfacecolor": "#2B5C8F", "markeredgecolor": "white", "alpha": 0.6},
+        flierprops={
+            "markerfacecolor": "#2B5C8F",
+            "markeredgecolor": "white",
+            "alpha": 0.6,
+        },
         ax=ax,
     )
 
@@ -146,7 +151,7 @@ def heatmap(data: pd.DataFrame, annot: bool = True, mask_upper: bool = True):
     corr = data.select_dtypes(include="number").corr()
 
     sns.set_theme(style="white", palette="pastel")
-    fig, ax = plt.subplots(figsize=(9, 7), dpi=150)
+    _fig, ax = plt.subplots(figsize=(9, 7), dpi=150)
 
     mask = np.triu(np.ones_like(corr, dtype=bool), k=1) if mask_upper else None
     cmap = sns.light_palette("#2B5C8F", as_cmap=True)
@@ -166,6 +171,7 @@ def heatmap(data: pd.DataFrame, annot: bool = True, mask_upper: bool = True):
 
     ax.set_title("Correlation Heatmap", fontsize=14, weight="bold", pad=15)
     plt.tight_layout()
+
 
 def mapplot(df):
 
